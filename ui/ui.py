@@ -1,10 +1,12 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 import logging
 
 class UI(ABC):
     """
     Virtual class for UI interface
     """
+    __metaclass__ = ABCMeta
+
     def __init__(self):
         logging.basicConfig(filename="./data/tagcounter.log", level=logging.INFO)
 

@@ -1,12 +1,13 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 
 class Storage(ABC):
     """
     Virtual class for Storage interface
     """
+    __metaclass__ = ABCMeta
 
     @abstractmethod
-    def get(self, url: str) -> str:
+    def get(self, url: str) -> dict:
         """ method to get data from db
 
         Parameters
@@ -26,4 +27,5 @@ class Storage(ABC):
             dict with keys url-URL and  tag-count
         """
         pass
+
 
