@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod, ABCMeta
 
-class HttpClient(ABC):
+class _HttpClient(ABC):
     """
     Virtual class for Storage interface
     """

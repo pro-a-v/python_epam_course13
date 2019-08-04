@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod, ABCMeta
 
-class HttpTagCounter(ABC):
+class _HttpTagCounter(ABC):
     """
     Virtual class for Storage interface
     """

@@ -1,6 +1,8 @@
 import argparse
 import sys
 
+from storage.storage_sqlalchemy_sqlite import Storage
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='details',
                                      usage = 'use "%(prog)s --help" for more information',
@@ -22,4 +24,5 @@ Usage:
     else:
         res = parser.parse_args()
         print("TUI mode")
+        storage = Storage()
 

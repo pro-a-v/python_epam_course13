@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod, ABCMeta
 
-class Storage(ABC):
+class _Storage(ABC):
     """
     Virtual class for Storage interface
     """
