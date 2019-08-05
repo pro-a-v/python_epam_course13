@@ -7,7 +7,7 @@ class _HttpTagCounter(ABC):
     """
     __metaclass__ = ABCMeta
     def __init__(self):
-        occurrences = defaultdict(int)
+        self.occurrences = defaultdict(int)
 
     @abstractmethod
     def process(self, data: str) -> dict:
@@ -18,3 +18,9 @@ class _HttpTagCounter(ABC):
         data : str
             Http raw data represented in string
         """
+
+    def inc_tag(self, tag: str):
+        self.occurrences[tag] += 1
+
+    def get(self):
+        return self.occurrences

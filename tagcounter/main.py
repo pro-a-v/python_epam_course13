@@ -2,6 +2,8 @@ import argparse
 import sys
 
 from storage.storage_sqlalchemy_sqlite import Storage
+from http_client.httpclient_requests import HttpClient
+from http_tag_counter.http_tag_counter_beautifulsoup import HttpTagCounter
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='details',
@@ -26,3 +28,7 @@ Usage:
         print("TUI mode")
         storage = Storage()
 
+        # --get yandex.ru
+        html = HttpClient().get(url='www.google.com')
+        tags = HttpTagCounter().process(html)
+        print(tags)
