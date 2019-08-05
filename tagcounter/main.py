@@ -17,7 +17,7 @@ Usage:
     With Url: --get "yandex.ru"  
                         '''
                         )
-    group.add_argument('--view', type=str, help='Get data saved in DB. Usage: --view "yandex.ru"')
+    group.add_argument('--view', type=str, help='Get data saved from DB. Usage: --view "yandex.ru"')
 
     if len(sys.argv) == 1:
         print('GUI mode')

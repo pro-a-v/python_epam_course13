@@ -46,9 +46,13 @@ class Storage(_Storage):
         try:
             # Check if already exist in db
             db_data = session.query(Data).selectfirst(Data.c.url == pickle_data['url'])
-            if db_data is None:
+
+            if db_data is None: # no data in db
                 db_data = Data()
                 db_data.url = pickle_data['url']
+                db_data.data = pickle.dumps(pickle_data['data'])
+                session.flush()
+            else: # data exist in db - update
                 db_data.data = pickle.dumps(pickle_data['data'])
                 session.flush()
             session.commit()
