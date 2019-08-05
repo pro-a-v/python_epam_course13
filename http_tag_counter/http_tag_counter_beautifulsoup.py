@@ -10,7 +10,7 @@ class HttpTagCounter(_HttpTagCounter):
 
 
     def process(self, data: str) -> dict:
-        soup = BeautifulSoup(data)
+        soup = BeautifulSoup(data,features='html.parser')
         for tag in soup.findAll():
             self.inc_tag(tag.name)
         return self.get()

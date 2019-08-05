@@ -3,7 +3,7 @@ import sys
 
 from storage.storage_sqlalchemy_sqlite import Storage
 from http_client.httpclient_requests import HttpClient
-from http_tag_counter.http_tag_counter_beautifulsoup import HttpTagCounter
+from http_tag_counter.http_tag_counter_loader import HttpTagCounter
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='details',
@@ -30,5 +30,10 @@ Usage:
 
         # --get yandex.ru
         html = HttpClient().get(url='www.google.com')
-        tags = HttpTagCounter().process(html)
-        print(tags)
+        tags1 = HttpTagCounter().load(type='HTMLParser').process(html)
+        tags2 = HttpTagCounter().load(type='beautifulsoup').process(html)
+        tags3 = HttpTagCounter().load(type='lxml').process(html)
+
+        print(tags1)
+        print(tags2)
+        print(tags3)

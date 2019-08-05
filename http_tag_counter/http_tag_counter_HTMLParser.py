@@ -1,14 +1,15 @@
 from HTMLParser import HTMLParser
+from http_tag_counter.http_tag_counter import _HttpTagCounter
 
-'''
-class print_tags(HTMLParser):
+
+class HttpTagCounter(_HttpTagCounter, HTMLParser):
+    def __init__(self):
+        _HttpTagCounter.__init__(self)
+        HTMLParser.__init__(self)
+
     def handle_starttag(self, tag, attrs):
-        print tag # TODO: add/update dict
+        self.inc_tag(tag)
 
-parser = print_tags()
-parser.feed(html)
-
-'''
-
-
-
+    def process(self, data: str) -> dict:
+        self.feed(data)
+        return self.get()
