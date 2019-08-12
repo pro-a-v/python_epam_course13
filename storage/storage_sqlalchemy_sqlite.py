@@ -30,14 +30,15 @@ class Storage(_Storage):
         # create a Session
         session = self.Session()
         # query data
-        db_result = session.query(Data).selectfirst(Data.c.url == url)
+        db_result = session.query(Data).filter_by(url = url)
         db_data = dict()
-        if db_result is not None:
-            db_data['url'] = url
-            db_data['data'] = pickle.loads(db_result.data)
-            return db_data
+        db_data['url'] = url
+        if db_result.count() > 0:
+            db_data['data'] = pickle.loads(db_result.one().data)
+        else:
+            db_data['data'] = 'No data in DB, try to \'get\' it first'
 
-        return None
+        return db_data
 
 
     def save(self, pickle_data: dict):
@@ -45,15 +46,17 @@ class Storage(_Storage):
         session = self.Session()
         try:
             # Check if already exist in db
-            db_data = session.query(Data).selectfirst(Data.c.url == pickle_data['url'])
+            db_data = session.query(Data).filter_by(url = pickle_data['url'])
 
-            if db_data is None: # no data in db
-                db_data = Data()
-                db_data.url = pickle_data['url']
-                db_data.data = pickle.dumps(pickle_data['data'])
+            if db_data.count() == 0:# no data in db
+                db_data_new = Data()
+                db_data_new.url = pickle_data['url']
+                db_data_new.data = pickle.dumps(pickle_data['data'])
+                session.add(db_data_new)
                 session.flush()
             else: # data exist in db - update
-                db_data.data = pickle.dumps(pickle_data['data'])
+                record = db_data.one()
+                record.data = pickle.dumps(pickle_data['data'])
                 session.flush()
             session.commit()
         except:
