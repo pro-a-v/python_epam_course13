@@ -1,9 +1,7 @@
 import argparse
 import sys
 
-from storage.storage_sqlalchemy_sqlite import Storage
-from http_client.httpclient_requests import HttpClient
-from http_tag_counter.http_tag_counter_loader import HttpTagCounter
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='details',
@@ -22,18 +20,17 @@ Usage:
     group.add_argument('--view', type=str, help='Get data saved from DB. Usage: --view "yandex.ru"')
 
     if len(sys.argv) == 1:
-        print('GUI mode')
+        from ui.gui import Display
+        ui = Display()
     else:
         res = parser.parse_args()
-        print("TUI mode")
-        storage = Storage()
+        from ui.tui import Display
+        ui = Display()
 
-        # --get yandex.ru
-        html = HttpClient().get(url='www.google.com')
-        tags1 = HttpTagCounter().load(type='HTMLParser').process(html)
-        tags2 = HttpTagCounter().load(type='beautifulsoup').process(html)
-        tags3 = HttpTagCounter().load(type='lxml').process(html)
+        if res.get is not None:
+            ui.get(res.get)
+        if res.view is not None:
+            ui.view(res.view)
+        ui.show()
 
-        print(tags1)
-        print(tags2)
-        print(tags3)
+
